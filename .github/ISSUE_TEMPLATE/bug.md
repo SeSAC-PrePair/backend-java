@@ -1,9 +1,9 @@
 ---
-name: Bug report
+name: bug
 about: Create a report to help us improve
 title: ''
 labels: ''
-assignees: ''
+assignees: Boyeon-Shin
 
 ---
 
