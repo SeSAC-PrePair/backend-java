@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wisoft.backend.dto.auth.SignupRequest;
-import wisoft.backend.dto.auth.SignupResponse;
+import wisoft.backend.dto.auth.*;
 import wisoft.backend.service.AuthService;
 
 @RestController
@@ -23,5 +22,17 @@ public class AuthController {
     public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest request) {
         SignupResponse response = authService.signup(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<LoginResponse> signin(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = authService.signin(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/password")
+    public ResponseEntity<FindPasswordResponse> findPassword(@Valid @RequestBody FindPasswordRequest request) {
+        FindPasswordResponse response = authService.findPassword(request);
+        return ResponseEntity.ok(response);
     }
 }

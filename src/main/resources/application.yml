@@ -1,13 +1,15 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/prepair_db
-    username: prepair_user
-    password: prepair_pass
+  application:
+    name: PrePair API
+
+  profiles:
+    active: local
 
   jpa:
-    hibernate:
-      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
         format_sql: true
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE

@@ -31,11 +31,13 @@ public class User {
     @Column(nullable = false)
     private String job;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String schedule;
+    private QuestionFrequency schedule;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "notification_type", nullable = false)
-    private String notificationType;
+    private NotificationType notificationType;
 
     @Column(nullable = false)
     @Builder.Default
