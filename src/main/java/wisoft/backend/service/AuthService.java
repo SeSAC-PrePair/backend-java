@@ -9,7 +9,6 @@ import wisoft.backend.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-
 public class AuthService {
 
     private final UserRepository userRepository;
@@ -42,7 +41,7 @@ public class AuthService {
         return request.settings().jobCategory() + "_" + request.settings().jobRole();
     }
 
-    public LoginResponse signin(@Valid LoginRequest request) {
+    public LoginResponse signin(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
@@ -57,7 +56,7 @@ public class AuthService {
                 user.getName());
     }
 
-    public FindPasswordResponse findPassword(@Valid FindPasswordRequest request) {
+    public FindPasswordResponse findPassword(FindPasswordRequest request) {
 
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));

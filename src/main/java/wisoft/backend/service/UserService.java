@@ -14,7 +14,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public DeleteUserResponse deleteUser(String userId, @Valid DeleteUserRequest request) {
+    public DeleteUserResponse deleteUser(String userId, DeleteUserRequest request) {
         Long id = Long.parseLong(userId);
 
         User user = userRepository.findById(id)
