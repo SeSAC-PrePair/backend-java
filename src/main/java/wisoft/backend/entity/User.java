@@ -22,18 +22,18 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String job;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private QuestionFrequency schedule;
+    private ScheduleType schedule;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "notification_type", nullable = false)

@@ -1,6 +1,5 @@
 package wisoft.backend.service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wisoft.backend.dto.auth.*;
@@ -24,8 +23,8 @@ public class AuthService {
                 .password(request.password())
                 .name(request.name())
                 .job(convertToJob(request))
-                .schedule(request.settings().questionFrequency())
-                .notificationType(request.settings().notification())
+                .schedule(request.settings().scheduleType())
+                .notificationType(request.settings().notificationType())
                 .build();
 
         User savedUser = userRepository.save(user);

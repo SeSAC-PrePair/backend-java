@@ -1,6 +1,6 @@
 package wisoft.backend.entity;
 
-public enum QuestionFrequency {
+public enum ScheduleType {
     DAILY,
     WEEKLY
 }

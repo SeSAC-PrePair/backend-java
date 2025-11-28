@@ -3,7 +3,7 @@ spring:
     name: PrePair API
 
   profiles:
-    active: local
+    active: dev
 
   jpa:
     show-sql: true
