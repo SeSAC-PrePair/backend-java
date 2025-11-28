@@ -6,9 +6,9 @@ import wisoft.backend.auth.dto.*;
 import wisoft.backend.auth.entity.User;
 import wisoft.backend.auth.repository.UserRepository;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -86,7 +86,7 @@ public class AuthService {
     }
 
     private String generateRandomCode() {
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         int code = random.nextInt(1000000);
         return String.format("%06d", code);
     }
