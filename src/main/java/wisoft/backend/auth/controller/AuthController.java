@@ -35,4 +35,16 @@ public class AuthController {
         FindPasswordResponse response = authService.findPassword(request);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/email/request")
+    public ResponseEntity<EmailResponse> requestEmail(@Valid @RequestBody EmailRequest request) {
+        EmailResponse response = authService.requestEmail(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/email/verify")
+    public ResponseEntity<EmailResponse> verifyEmail(@Valid @RequestBody VerifyEmailRequest request) {
+        EmailResponse response = authService.verifyEmail(request);
+        return ResponseEntity.ok(response);
+    }
 }

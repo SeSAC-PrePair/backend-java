@@ -16,3 +16,17 @@ spring:
 
   jackson:
     property-naming-strategy: SNAKE_CASE
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: wwmin828@gmail.com
+    password: gxtbawxlbfdqkxpl
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
