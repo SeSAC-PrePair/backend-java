@@ -1,4 +1,4 @@
-package wisoft.backend.dto.auth;
+package wisoft.backend.auth.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;

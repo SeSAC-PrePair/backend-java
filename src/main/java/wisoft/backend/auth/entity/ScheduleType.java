@@ -1,4 +1,4 @@
-package wisoft.backend.entity;
+package wisoft.backend.auth.entity;
 
 public enum ScheduleType {
     DAILY,

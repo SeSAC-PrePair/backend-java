@@ -1,4 +1,4 @@
-package wisoft.backend.dto.auth;
+package wisoft.backend.auth.dto;
 
 public record SignupResponse(
         Long userId,

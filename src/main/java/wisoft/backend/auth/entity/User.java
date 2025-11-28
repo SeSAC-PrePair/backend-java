@@ -1,4 +1,4 @@
-package wisoft.backend.entity;
+package wisoft.backend.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

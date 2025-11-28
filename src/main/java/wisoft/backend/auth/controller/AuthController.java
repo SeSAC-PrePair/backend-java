@@ -1,4 +1,4 @@
-package wisoft.backend.controller;
+package wisoft.backend.auth.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wisoft.backend.dto.auth.*;
-import wisoft.backend.service.AuthService;
+import wisoft.backend.auth.dto.*;
+import wisoft.backend.auth.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")

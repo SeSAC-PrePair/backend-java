@@ -1,12 +1,12 @@
-package wisoft.backend.controller;
+package wisoft.backend.auth.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wisoft.backend.dto.auth.DeleteUserRequest;
-import wisoft.backend.dto.auth.DeleteUserResponse;
-import wisoft.backend.service.UserService;
+import wisoft.backend.auth.dto.DeleteUserRequest;
+import wisoft.backend.auth.dto.DeleteUserResponse;
+import wisoft.backend.auth.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")

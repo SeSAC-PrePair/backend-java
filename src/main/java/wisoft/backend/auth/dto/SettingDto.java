@@ -1,9 +1,9 @@
-package wisoft.backend.dto.auth;
+package wisoft.backend.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import wisoft.backend.entity.NotificationType;
-import wisoft.backend.entity.ScheduleType;
+import wisoft.backend.auth.entity.NotificationType;
+import wisoft.backend.auth.entity.ScheduleType;
 
 public record SettingDto(
         @NotBlank(message = "직무 카테고리는 필수입니다.")

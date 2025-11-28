@@ -1,10 +1,10 @@
-package wisoft.backend.service;
+package wisoft.backend.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import wisoft.backend.dto.auth.*;
-import wisoft.backend.entity.User;
-import wisoft.backend.repository.UserRepository;
+import wisoft.backend.auth.dto.*;
+import wisoft.backend.auth.entity.User;
+import wisoft.backend.auth.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
