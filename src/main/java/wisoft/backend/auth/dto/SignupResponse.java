@@ -1,13 +1,13 @@
 package wisoft.backend.auth.dto;
 
 public record SignupResponse(
-        Long userId,
+        Integer userId,
         String email,
         String name,
         String message) {
 
     public static SignupResponse of(
-            Long userId,
+            Integer userId,
             String email,
             String name) {
         return new SignupResponse(userId, email, name, "회원가입이 완료되었습니다.");
