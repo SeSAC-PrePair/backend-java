@@ -5,19 +5,21 @@ import wisoft.backend.interviews.entity.QuestionStatus;
 
 import java.time.LocalDateTime;
 
-public record TodayQuestionResponse(
+public record QuestionHistoryResponse(
         String historyId,
         String questionId,
         String question,
+        Integer score,
         QuestionStatus status,
         LocalDateTime createdAt,
         LocalDateTime answeredAt
 ) {
-    public static TodayQuestionResponse from(History history) {
-        return new TodayQuestionResponse(
+    public static QuestionHistoryResponse from(History history) {
+        return new QuestionHistoryResponse(
                 history.getHistoryId(),
                 history.getQuestionId(),
                 history.getQuestion(),
+                history.getScore(),
                 history.getStatus(),
                 history.getCreatedAt(),
                 history.getAnsweredAt()
