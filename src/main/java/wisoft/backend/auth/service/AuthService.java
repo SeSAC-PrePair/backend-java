@@ -1,5 +1,6 @@
 package wisoft.backend.auth.service;
 
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wisoft.backend.auth.dto.*;
@@ -31,7 +32,9 @@ public class AuthService {
             throw new IllegalArgumentException("이메일 인증이 필요합니다.");
         }
 
+        String id =  "u_" + UUID.randomUUID();
         User user = User.builder()
+                .id(id)
                 .email(request.email())
                 .password(request.password())
                 .name(request.name())
