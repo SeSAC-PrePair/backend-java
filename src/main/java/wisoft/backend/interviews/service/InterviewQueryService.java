@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class InterviewService {
+public class InterviewQueryService {
 
     private final HistoryRepository historyRepository;
 

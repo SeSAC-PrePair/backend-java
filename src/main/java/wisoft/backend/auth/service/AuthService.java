@@ -62,7 +62,7 @@ public class AuthService {
     }
 
     private String convertToJob(SignupRequest request) {
-        return request.settings().jobCategory() + "_" + request.settings().jobRole();
+        return request.settings().jobCategory() + " " + request.settings().jobRole();
     }
 
     public LoginResponse signin(LoginRequest request) {

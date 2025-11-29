@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 import wisoft.backend.interviews.entity.History;
 import wisoft.backend.interviews.entity.QuestionStatus;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,13 @@ public interface HistoryRepository extends JpaRepository<History, String> {
      */
     List<History> findByUser_IdOrderByCreatedAtDesc(String userId);
 
+    /**
+     * 특정 사용자의 특정 질문 조회
+     */
     Optional<History> findByHistoryIdAndUser_Id(String historyId, String userId);
 
+    /**
+     * 특정 사용자의 특정 상태 질문 내역 조회
+     */
     List<History> findByUser_IdAndStatus(String userId, QuestionStatus questionStatus);
 }

@@ -1,4 +1,4 @@
-package wisoft.backend.question.entity;
+package wisoft.backend.interviews.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
