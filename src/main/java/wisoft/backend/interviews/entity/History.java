@@ -46,7 +46,9 @@ public class History {
     @Column(columnDefinition = "TEXT")
     private String feedback;
 
-    private Integer score;
+    @Builder.Default
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private Integer score = 0;
 
     @Column(name = "answered_at")
     private LocalDateTime answeredAt;
