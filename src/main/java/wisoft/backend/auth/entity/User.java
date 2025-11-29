@@ -14,28 +14,26 @@ import org.hibernate.type.SqlTypes;
 public class User {
 
     @Id
-    @Column(name = "user_id", length = 200)
+    @Column(name = "user_id")
     private String id;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     private String job;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(nullable = false)
     private ScheduleType schedule;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "notification_type", nullable = false)
     private NotificationType notificationType;
 

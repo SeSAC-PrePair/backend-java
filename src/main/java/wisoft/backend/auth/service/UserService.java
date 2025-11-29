@@ -14,15 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public DeleteUserResponse deleteUser(String userId, DeleteUserRequest request) {
-
-        Long id;
-        try {
-            id = Long.parseLong(userId);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("올바르지 않은 사용자 ID 형식입니다.");
-        }
-
-        User user = userRepository.findById(id)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
 
         if ((user.getPassword().equals(request.password())) == false) {
