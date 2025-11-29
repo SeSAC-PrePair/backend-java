@@ -1,4 +1,4 @@
-package wisoft.backend.auth.dto;
+package wisoft.backend.auth.dto.response;
 
 public record FindPasswordResponse(
         String email,

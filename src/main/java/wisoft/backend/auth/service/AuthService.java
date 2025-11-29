@@ -3,7 +3,15 @@ package wisoft.backend.auth.service;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import wisoft.backend.auth.dto.*;
+import wisoft.backend.auth.dto.request.EmailRequest;
+import wisoft.backend.auth.dto.request.FindPasswordRequest;
+import wisoft.backend.auth.dto.request.LoginRequest;
+import wisoft.backend.auth.dto.request.SignupRequest;
+import wisoft.backend.auth.dto.request.VerifyEmailRequest;
+import wisoft.backend.auth.dto.response.EmailResponse;
+import wisoft.backend.auth.dto.response.FindPasswordResponse;
+import wisoft.backend.auth.dto.response.LoginResponse;
+import wisoft.backend.auth.dto.response.SignupResponse;
 import wisoft.backend.auth.entity.User;
 import wisoft.backend.auth.repository.UserRepository;
 

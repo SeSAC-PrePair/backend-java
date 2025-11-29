@@ -2,8 +2,8 @@ package wisoft.backend.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import wisoft.backend.auth.dto.DeleteUserRequest;
-import wisoft.backend.auth.dto.DeleteUserResponse;
+import wisoft.backend.auth.dto.request.DeleteUserRequest;
+import wisoft.backend.auth.dto.response.DeleteUserResponse;
 import wisoft.backend.auth.entity.User;
 import wisoft.backend.auth.repository.UserRepository;
 

@@ -4,8 +4,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import wisoft.backend.auth.dto.DeleteUserRequest;
-import wisoft.backend.auth.dto.DeleteUserResponse;
+import wisoft.backend.auth.dto.request.DeleteUserRequest;
+import wisoft.backend.auth.dto.response.DeleteUserResponse;
 import wisoft.backend.auth.service.UserService;
 
 @RestController

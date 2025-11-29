@@ -8,7 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wisoft.backend.auth.dto.*;
+import wisoft.backend.auth.dto.request.EmailRequest;
+import wisoft.backend.auth.dto.request.FindPasswordRequest;
+import wisoft.backend.auth.dto.request.LoginRequest;
+import wisoft.backend.auth.dto.request.SignupRequest;
+import wisoft.backend.auth.dto.request.VerifyEmailRequest;
+import wisoft.backend.auth.dto.response.EmailResponse;
+import wisoft.backend.auth.dto.response.FindPasswordResponse;
+import wisoft.backend.auth.dto.response.LoginResponse;
+import wisoft.backend.auth.dto.response.SignupResponse;
 import wisoft.backend.auth.service.AuthService;
 
 @RestController

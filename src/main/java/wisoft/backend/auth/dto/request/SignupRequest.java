@@ -1,9 +1,10 @@
-package wisoft.backend.auth.dto;
+package wisoft.backend.auth.dto.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import wisoft.backend.auth.dto.SettingDto;
 
 public record SignupRequest(
 
