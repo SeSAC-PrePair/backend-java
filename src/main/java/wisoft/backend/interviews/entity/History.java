@@ -17,9 +17,11 @@ import java.time.LocalDateTime;
 public class History {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "question_id")
-    private Integer id;
+    @Column(name = "history_id", length = 200)
+    private String historyId;
+
+    @Column(name = "question_id", length = 200, nullable = false)
+    private String questionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
