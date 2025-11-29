@@ -1,4 +1,4 @@
-package wisoft.backend.question.service;
+package wisoft.backend.interviews.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,11 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import wisoft.backend.auth.entity.User;
 import wisoft.backend.auth.repository.UserRepository;
-import wisoft.backend.interviews.HistoryRepository;
 import wisoft.backend.interviews.entity.History;
 import wisoft.backend.interviews.entity.QuestionStatus;
-import wisoft.backend.question.entity.InterviewQuestion;
-import wisoft.backend.question.repository.InterviewQuestionRepository;
+import wisoft.backend.interviews.entity.InterviewQuestion;
+import wisoft.backend.interviews.repository.HistoryRepository;
+import wisoft.backend.interviews.repository.InterviewQuestionRepository;
 
 
 @Service
@@ -50,7 +51,7 @@ public class QuestionService {
     private final UserRepository userRepository;
 
     /**
-     * 질문 생성 및 저장
+     * 새로운 면접 질문 생성 및 저장
      */
     @Transactional
     public String generateQuestion(String userId) {
@@ -58,7 +59,7 @@ public class QuestionService {
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다: " + userId));
 
         // 이미 받은 질문들 조회
-        List<String> askedQuestions = historyRepository.findByUserId(userId).stream()
+        List<String> askedQuestions = historyRepository.findByUser_IdOrderByCreatedAtDesc(userId).stream()
                 .map(History::getQuestion)
                 .collect(Collectors.toList());
 
@@ -104,14 +105,14 @@ public class QuestionService {
     }
 
     /**
-     * 미답변 질문 조회
+     * 특정 사용자의 미답변 질문 목록 조회
      */
     public List<History> getUnansweredQuestions(String userId) {
-        return historyRepository.findByUserIdAndStatus(userId, QuestionStatus.UNANSWERED);
+        return historyRepository.findByUser_IdAndStatus(userId, QuestionStatus.UNANSWERED);
     }
 
     /**
-     * AI를 활용한 질문 생성 (중복 방지)
+     * AI를 활용한 맞춤 질문 생성 (중복 방지)
      */
     private String generateQuestionWithSamples(
             String jobPosition,
@@ -133,7 +134,7 @@ public class QuestionService {
     }
 
     /**
-     * 시스템 프롬프트 생성 (입력은 JSON, 출력은 텍스트)
+     * AI에 전달한 시스템 프롬프트 생성 (입력은 JSON, 출력은 텍스트)
      */
     private String buildSystemPrompt(
             String jobPosition,
@@ -155,7 +156,7 @@ public class QuestionService {
                         "3. 질문은 구체적이고 상세해야 하며, 상황이나 맥락을 포함해주세요\n" +
                         "4. 질문 길이는 최소 2문장 이상으로 작성하고, 배경 설명이나 구체적인 시나리오를 포함하세요\n" +
                         "5. 단순한 'A에 대해 설명하세요' 보다는 '어떤 상황에서 A를 어떻게 활용했는지' 같이 구체적으로 물어보세요\n" +
-                        "6. 질문만 텍스트로 출력하고, 다른 설명이나 메타 정보는 포함하지 마세요" ,
+                        "6. 질문만 텍스트로 출력하고, 다른 설명이나 메타 정보는 포함하지 마세요",
                 jobPosition,
                 samplesJson,
                 askedQuestionsJson,
@@ -232,7 +233,7 @@ public class QuestionService {
     }
 
     /**
-     * API 요청 바디 생성
+     * OpenRouter API 요청 바디 생성
      */
     private Map<String, Object> buildRequestBody(String systemPrompt) {
         Map<String, Object> requestBody = new HashMap<>();
@@ -274,7 +275,7 @@ public class QuestionService {
     }
 
     /**
-     * API 응답에서 질문 추출 (단순 텍스트)
+     * API 응답에서 생성된 질문 추출 (단순 텍스트)
      */
     private String extractQuestionFromResponse(ResponseEntity<Map> response) {
         Map<String, Object> responseBody = response.getBody();

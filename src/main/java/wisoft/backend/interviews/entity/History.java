@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 public class History {
 
     @Id
-    @Column(name = "history_id", length = 200)
+    @Column(name = "history_id")
     private String historyId;
 
-    @Column(name = "question_id", length = 200, nullable = false)
+    @Column(name = "question_id", nullable = false)
     private String questionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,7 +31,6 @@ public class History {
     private String question;
 
     @Enumerated(EnumType.STRING)
-    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Builder.Default
     @Column(nullable = false)
     private QuestionStatus status = QuestionStatus.UNANSWERED;
@@ -46,9 +45,7 @@ public class History {
     @Column(columnDefinition = "TEXT")
     private String feedback;
 
-    @Builder.Default
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private Integer score = 0;
+    private Integer score;
 
     @Column(name = "answered_at")
     private LocalDateTime answeredAt;
