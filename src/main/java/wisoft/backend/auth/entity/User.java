@@ -14,9 +14,8 @@ import org.hibernate.type.SqlTypes;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Integer id;
+    @Column(name = "user_id", length = 200)
+    private String id;
 
     @Column(nullable = false, unique = true)
     private String email;
