@@ -1,4 +1,4 @@
-package wisoft.backend.auth.dto;
+package wisoft.backend.auth.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

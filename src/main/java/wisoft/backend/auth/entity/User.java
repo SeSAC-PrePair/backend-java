@@ -50,4 +50,13 @@ public class User {
         }
         this.points -= points;
     }
+
+    /**
+     * 프로필 업데이트 (job, schedule, notificationType만 변경 가능)
+     */
+    public void updateProfile(String job, ScheduleType scheduleType, NotificationType notificationType) {
+        this.job = job;
+        this.schedule = scheduleType;
+        this.notificationType = notificationType;
+    }
 }
