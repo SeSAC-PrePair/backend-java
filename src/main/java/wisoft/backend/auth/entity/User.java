@@ -40,4 +40,14 @@ public class User {
     @Column(nullable = false)
     @Builder.Default
     private Integer points = 0;
+
+    /**
+     * 포인트 차감
+     */
+    public void deductPoints(Integer points) {
+        if (this.points < points) {
+            throw new IllegalArgumentException("포인트가 부족합니다. (보유: " + this.points + ", 필요: " + points + ")");
+        }
+        this.points -= points;
+    }
 }
