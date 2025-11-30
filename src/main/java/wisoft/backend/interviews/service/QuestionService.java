@@ -25,6 +25,7 @@ import wisoft.backend.interviews.entity.QuestionStatus;
 import wisoft.backend.interviews.entity.InterviewQuestion;
 import wisoft.backend.interviews.repository.HistoryRepository;
 import wisoft.backend.interviews.repository.InterviewQuestionRepository;
+import wisoft.backend.notification.NotificationService;
 
 
 @Service
@@ -49,6 +50,7 @@ public class QuestionService {
     private final HistoryRepository historyRepository;
     private final InterviewQuestionRepository interviewQuestionRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     /**
      * 새로운 면접 질문 생성 및 저장
@@ -84,6 +86,7 @@ public class QuestionService {
                 .build();
 
         historyRepository.save(history);
+        notificationService.sendQuestionNotification(userId, newQuestion);
         log.info("질문 생성 완료 - userId: {}, question: {}", userId, newQuestion);
 
         return newQuestion;
