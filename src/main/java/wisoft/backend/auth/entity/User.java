@@ -2,8 +2,6 @@ package wisoft.backend.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 @Entity
 @Getter
@@ -49,5 +47,14 @@ public class User {
             throw new IllegalArgumentException("포인트가 부족합니다. (보유: " + this.points + ", 필요: " + points + ")");
         }
         this.points -= points;
+    }
+
+    /**
+     * 프로필 업데이트 (job, schedule, notificationType만 변경 가능)
+     */
+    public void updateProfile(String job, ScheduleType scheduleType, NotificationType notificationType) {
+        this.job = job;
+        this.schedule = scheduleType;
+        this.notificationType = notificationType;
     }
 }

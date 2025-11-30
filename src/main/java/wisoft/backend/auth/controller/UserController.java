@@ -6,8 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wisoft.backend.auth.dto.request.DeleteUserRequest;
 import wisoft.backend.auth.dto.request.RewardDeductRequest;
+import wisoft.backend.auth.dto.request.UserProfileUpdateRequest;
 import wisoft.backend.auth.dto.response.DeleteUserResponse;
 import wisoft.backend.auth.dto.response.RewardDeductResponse;
+import wisoft.backend.auth.dto.response.UserProfileResponse;
+import wisoft.backend.auth.dto.response.UserProfileUpdateResponse;
 import wisoft.backend.auth.service.UserService;
 
 @RestController
@@ -32,6 +35,23 @@ public class UserController {
             @Valid @RequestBody RewardDeductRequest request
     ) {
         RewardDeductResponse response = userService.deductRewardPoints(userId, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserProfileResponse> getUserProfile(
+            @RequestHeader("X-User-ID") String userId
+    ) {
+        UserProfileResponse response = userService.getUserProfile(userId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/me")
+    public ResponseEntity<UserProfileUpdateResponse> updateUserProfile(
+            @RequestHeader("X-User-ID") String userId,
+            @Valid @RequestBody UserProfileUpdateRequest request
+    ) {
+        UserProfileUpdateResponse response = userService.updateUserProfile(userId, request);
         return ResponseEntity.ok(response);
     }
 }

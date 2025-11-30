@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import wisoft.backend.auth.dto.KakaoTokenResponse;
+import wisoft.backend.auth.dto.response.KakaoTokenResponse;
 import wisoft.backend.auth.entity.OAuthProvider;
 import wisoft.backend.auth.entity.OAuthToken;
 import wisoft.backend.auth.entity.User;

@@ -61,7 +61,9 @@ public class QuestionService {
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다: " + userId));
 
         // 이미 받은 질문들 조회
-        List<String> askedQuestions = historyRepository.findByUser_IdOrderByCreatedAtDesc(userId).stream()
+        List<String> previousQuestions = historyRepository
+                .findByUser_IdOrderByCreatedAtDesc(userId)
+                .stream()
                 .map(History::getQuestion)
                 .collect(Collectors.toList());
 
@@ -73,7 +75,7 @@ public class QuestionService {
         String newQuestion = generateQuestionWithSamples(
                 user.getJob(),
                 sampleQuestions,
-                askedQuestions
+                previousQuestions
         );
 
         // History에 저장
