@@ -16,7 +16,9 @@ import wisoft.backend.interviews.entity.QuestionStatus;
 import wisoft.backend.interviews.repository.HistoryRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -113,13 +115,16 @@ public class UserService {
         }
 
         Set<LocalDate> answeredDates = histories.stream()
-                .map(h -> h.getAnsweredAt().toLocalDate())
+                .map(History::getAnsweredAt)
+                .filter(Objects::nonNull)
+                .map(LocalDateTime::toLocalDate)
                 .collect(Collectors.toSet());
 
         LocalDate today = LocalDate.now();
         int consecutiveDays = 0;
 
         LocalDate checkDate = today;
+
         while (answeredDates.contains(checkDate)) {
             consecutiveDays++;
             checkDate = checkDate.minusDays(1);
