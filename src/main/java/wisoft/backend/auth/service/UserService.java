@@ -29,6 +29,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final HistoryRepository historyRepository;
+    private final KakaoAuthService kakaoAuthService;
 
     public DeleteUserResponse deleteUser(String userId, DeleteUserRequest request) {
         User user = getUserById(userId);
@@ -40,6 +41,7 @@ public class UserService {
         List<History> histories = historyRepository.findByUser_IdOrderByCreatedAtDesc(userId);
         historyRepository.deleteAll(histories);
         userRepository.delete(user);
+        kakaoAuthService.removeTempToken(user.getEmail());
 
         return DeleteUserResponse.of(user.getName());
     }
