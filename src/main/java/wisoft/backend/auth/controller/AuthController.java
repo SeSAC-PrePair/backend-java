@@ -71,7 +71,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    /**
+     /**
      * 카카오 OAuth 인증 페이지로 리다이렉트
      */
     @GetMapping("/kakao")
@@ -98,6 +98,6 @@ public class AuthController {
         kakaoAuthService.handleCallback(code, state);
 
         // 프론트엔드 성공 페이지로 리다이렉트
-        return new RedirectView(frontendUrl + "/rewards");
+        return new RedirectView(frontendUrl + "/signup-success?kakao=success&userId=" + state + "&needsKakaoAuth=true");
     }
 }
