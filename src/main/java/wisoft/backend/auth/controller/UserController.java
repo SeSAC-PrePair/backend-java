@@ -35,6 +35,14 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/me/rewards")
+    public ResponseEntity<RewardPageResponse> getRewardPage(
+            @RequestHeader("X-User-ID") String userId
+    ) {
+        RewardPageResponse response = userService.getRewardPage(userId);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/me")
     public ResponseEntity<UserProfileResponse> getUserProfile(
             @RequestHeader("X-User-ID") String userId
