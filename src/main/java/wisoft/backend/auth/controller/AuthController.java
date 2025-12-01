@@ -72,7 +72,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-     /**
+    /**
      * 카카오 OAuth 인증 페이지로 리다이렉트
      */
     @GetMapping("/kakao")
