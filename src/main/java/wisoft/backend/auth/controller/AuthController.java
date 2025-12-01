@@ -77,8 +77,9 @@ public class AuthController {
      */
     @GetMapping("/kakao")
     public RedirectView authorize(@RequestParam("email") String email) {
+        // prompt=login: 매번 카카오 로그인 및 동의 화면을 표시 (탈퇴 후 재가입 시 필요)
         String kakaoAuthUrl = String.format(
-                "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=talk_message&state=%s",
+                "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=talk_message&state=%s&prompt=login",
                 clientId,
                 redirectUri,
                 email
@@ -110,7 +111,7 @@ public class AuthController {
         // 카카오 토큰 임시 저장
         kakaoAuthService.saveTempToken(email, code);
 
-        // 프론트엔드 성공 페이지로 리다이렉트
-        return new RedirectView(frontendUrl + "/auth?mode=signup&kakao=success&email=" + email);
+        // 프론트엔드 성공 페이지로 리다이렉트 (Service Worker 충돌 방지를 위해 /signup-success 사용)
+        return new RedirectView(frontendUrl + "/signup-success?kakao=success&email=" + email);
     }
 }

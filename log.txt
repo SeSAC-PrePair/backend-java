@@ -1,0 +1,393 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2025-12-02T00:42:49.150+09:00  INFO 917831 --- [PrePair API] [           main] wisoft.backend.BackendJavaApplication    : Starting BackendJavaApplication v0.0.1-SNAPSHOT using Java 21.0.7 with PID 917831 (/home/prepair/prepair/backend-java/build/libs/backend-java-0.0.1-SNAPSHOT.jar started by prepair in /home/prepair/prepair/backend-java)
+2025-12-02T00:42:49.157+09:00  INFO 917831 --- [PrePair API] [           main] wisoft.backend.BackendJavaApplication    : The following 1 profile is active: "dev"
+2025-12-02T00:42:51.539+09:00  INFO 917831 --- [PrePair API] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-02T00:42:51.710+09:00  INFO 917831 --- [PrePair API] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 151 ms. Found 4 JPA repository interfaces.
+2025-12-02T00:42:53.027+09:00  INFO 917831 --- [PrePair API] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8017 (http)
+2025-12-02T00:42:53.053+09:00  INFO 917831 --- [PrePair API] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-02T00:42:53.053+09:00  INFO 917831 --- [PrePair API] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-12-02T00:42:53.117+09:00  INFO 917831 --- [PrePair API] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-02T00:42:53.120+09:00  INFO 917831 --- [PrePair API] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3830 ms
+2025-12-02T00:42:53.556+09:00  INFO 917831 --- [PrePair API] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-02T00:42:53.669+09:00  INFO 917831 --- [PrePair API] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2025-12-02T00:42:53.760+09:00  INFO 917831 --- [PrePair API] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-02T00:42:54.438+09:00  INFO 917831 --- [PrePair API] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-02T00:42:54.518+09:00  INFO 917831 --- [PrePair API] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-02T00:42:55.263+09:00  INFO 917831 --- [PrePair API] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3fc1abf
+2025-12-02T00:42:55.268+09:00  INFO 917831 --- [PrePair API] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-02T00:42:55.423+09:00  INFO 917831 --- [PrePair API] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 16.9
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-02T00:42:57.446+09:00  INFO 917831 --- [PrePair API] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-02T00:42:57.516+09:00  INFO 917831 --- [PrePair API] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-02T00:42:58.587+09:00  INFO 917831 --- [PrePair API] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-02T00:42:59.006+09:00  WARN 917831 --- [PrePair API] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-02T00:42:59.934+09:00  INFO 917831 --- [PrePair API] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8017 (http) with context path '/'
+2025-12-02T00:42:59.953+09:00  INFO 917831 --- [PrePair API] [           main] wisoft.backend.BackendJavaApplication    : Started BackendJavaApplication in 12.058 seconds (process running for 13.651)
+2025-12-02T00:43:31.074+09:00  INFO 917831 --- [PrePair API] [nio-8017-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-02T00:43:31.075+09:00  INFO 917831 --- [PrePair API] [nio-8017-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-02T00:43:31.078+09:00  INFO 917831 --- [PrePair API] [nio-8017-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.email,
+        u1_0.job,
+        u1_0.name,
+        u1_0.notification_type,
+        u1_0.password,
+        u1_0.points,
+        u1_0.schedule 
+    from
+        "user" u1_0 
+    where
+        u1_0.user_id=?
+===== kakaoAuthUrl =====
+https://kauth.kakao.com/oauth/authorize?client_id=6e72c7bfa8efd0c0ad72da33bab064ff&redirect_uri=https://prepair.wisoft.dev/api/auth/kakao/callback&response_type=code&scope=talk_message&state=water_8760@naver.com&prompt=login
+===== RAW CALLBACK =====
+URL: http://192.168.30.67:8017/api/auth/kakao/callback
+Query: code=1dR0Dzyh5qC_hYfuxgMa-QYOfhcd3g1h7XSAwRWmduSODs8f7WorMgAAAAQKFwHPAAABmtqWEFMq17LwdM8QAg&state=water_8760%40naver.com
+code=1dR0Dzyh5qC_hYfuxgMa-QYOfhcd3g1h7XSAwRWmduSODs8f7WorMgAAAAQKFwHPAAABmtqWEFMq17LwdM8QAg, state(email)=water_8760@naver.com
+=========================
+2025-12-02T00:44:19.474+09:00  INFO 917831 --- [PrePair API] [nio-8017-exec-8] w.backend.auth.service.KakaoAuthService  : 카카오 토큰 임시 저장 완료 - email: water_8760@naver.com
+Hibernate: 
+    select
+        u1_0.user_id 
+    from
+        "user" u1_0 
+    where
+        u1_0.email=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.email,
+        u1_0.job,
+        u1_0.name,
+        u1_0.notification_type,
+        u1_0.password,
+        u1_0.points,
+        u1_0.schedule 
+    from
+        "user" u1_0 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    insert 
+    into
+        "user"
+        (email, job, name, notification_type, password, points, schedule, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        oauth_token
+        (access_token, created_at, provider, refresh_token, refresh_token_expires_at, token_expires_at, updated_at, user_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-02T00:44:20.224+09:00  INFO 917831 --- [PrePair API] [nio-8017-exec-9] w.backend.auth.service.KakaoAuthService  : 임시 토큰을 User에 연결 완료 - userId: u_e4912d2e-c5bf-4786-953e-4a26e0bf07cc, email: water_8760@naver.com
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.email,
+        u1_0.job,
+        u1_0.name,
+        u1_0.notification_type,
+        u1_0.password,
+        u1_0.points,
+        u1_0.schedule 
+    from
+        "user" u1_0 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        h1_0.history_id,
+        h1_0.answer,
+        h1_0.answered_at,
+        h1_0.created_at,
+        h1_0.feedback,
+        h1_0.question,
+        h1_0.question_id,
+        h1_0.score,
+        h1_0.status,
+        h1_0.user_id 
+    from
+        history h1_0 
+    left join
+        "user" u1_0 
+            on u1_0.user_id=h1_0.user_id 
+    where
+        u1_0.user_id=? 
+    order by
+        h1_0.created_at desc
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        interview_questions 
+    ORDER BY
+        RANDOM() 
+    LIMIT
+        ?
+Hibernate: 
+    select
+        h1_0.history_id,
+        h1_0.answer,
+        h1_0.answered_at,
+        h1_0.created_at,
+        h1_0.feedback,
+        h1_0.question,
+        h1_0.question_id,
+        h1_0.score,
+        h1_0.status,
+        h1_0.user_id 
+    from
+        history h1_0 
+    where
+        h1_0.history_id=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.email,
+        u1_0.job,
+        u1_0.name,
+        u1_0.notification_type,
+        u1_0.password,
+        u1_0.points,
+        u1_0.schedule 
+    from
+        "user" u1_0 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        ot1_0.id,
+        ot1_0.access_token,
+        ot1_0.created_at,
+        ot1_0.provider,
+        ot1_0.refresh_token,
+        ot1_0.refresh_token_expires_at,
+        ot1_0.token_expires_at,
+        ot1_0.updated_at,
+        ot1_0.user_id 
+    from
+        oauth_token ot1_0 
+    left join
+        "user" u1_0 
+            on u1_0.user_id=ot1_0.user_id 
+    where
+        u1_0.user_id=? 
+        and ot1_0.provider=?
+2025-12-02T00:44:22.900+09:00  INFO 917831 --- [PrePair API] [nio-8017-exec-1] w.b.notification.NotificationService     : 카카오톡 전송 성공 - userId: u_e4912d2e-c5bf-4786-953e-4a26e0bf07cc
+2025-12-02T00:44:26.546+09:00  INFO 917831 --- [PrePair API] [nio-8017-exec-1] w.b.notification.NotificationService     : 이메일 전송 성공 - userId: u_e4912d2e-c5bf-4786-953e-4a26e0bf07cc, email: water_8760@naver.com
+2025-12-02T00:44:26.548+09:00  INFO 917831 --- [PrePair API] [nio-8017-exec-1] w.b.interviews.service.QuestionService   : 질문 생성 완료 - userId: u_e4912d2e-c5bf-4786-953e-4a26e0bf07cc, question: 프로젝트의 초기 단계에서 요구사항을 수집할 때, 이해관계자와의 소통이 매우 중요합니다. 이전에 어떤 프로젝트에서 요구사항을 파악하는 과정에서 어려움을 겪었던 경험이 있다면, 그 상황에서 어떻게 소통했는지와 어떤 방법으로 문제를 해결했는지 구체적으로 설명해 주세요.
+Hibernate: 
+    insert 
+    into
+        history
+        (answer, answered_at, created_at, feedback, question, question_id, score, status, user_id, history_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.email,
+        u1_0.job,
+        u1_0.name,
+        u1_0.notification_type,
+        u1_0.password,
+        u1_0.points,
+        u1_0.schedule 
+    from
+        "user" u1_0 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        history 
+    WHERE
+        user_id = ? 
+        AND created_at >= CURRENT_DATE 
+        AND created_at < CURRENT_DATE + INTERVAL '1 day' 
+    ORDER BY
+        created_at DESC 
+    LIMIT
+        1
+Hibernate: 
+    select
+        count(h1_0.history_id) 
+    from
+        history h1_0 
+    left join
+        "user" u1_0 
+            on u1_0.user_id=h1_0.user_id 
+    where
+        u1_0.user_id=? 
+        and h1_0.status=?
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        history 
+    WHERE
+        user_id = ? 
+        AND created_at >= CURRENT_DATE 
+        AND created_at < CURRENT_DATE + INTERVAL '1 day' 
+    ORDER BY
+        created_at DESC 
+    LIMIT
+        1
+Hibernate: 
+    select
+        h1_0.history_id,
+        h1_0.answer,
+        h1_0.answered_at,
+        h1_0.created_at,
+        h1_0.feedback,
+        h1_0.question,
+        h1_0.question_id,
+        h1_0.score,
+        h1_0.status,
+        h1_0.user_id 
+    from
+        history h1_0 
+    left join
+        "user" u1_0 
+            on u1_0.user_id=h1_0.user_id 
+    where
+        u1_0.user_id=? 
+        and h1_0.status=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.email,
+        u1_0.job,
+        u1_0.name,
+        u1_0.notification_type,
+        u1_0.password,
+        u1_0.points,
+        u1_0.schedule 
+    from
+        "user" u1_0 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        count(h1_0.history_id) 
+    from
+        history h1_0 
+    left join
+        "user" u1_0 
+            on u1_0.user_id=h1_0.user_id 
+    where
+        u1_0.user_id=? 
+        and h1_0.status=?
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        history 
+    WHERE
+        user_id = ? 
+        AND created_at >= CURRENT_DATE 
+        AND created_at < CURRENT_DATE + INTERVAL '1 day' 
+    ORDER BY
+        created_at DESC 
+    LIMIT
+        1
+Hibernate: 
+    select
+        h1_0.history_id,
+        h1_0.answer,
+        h1_0.answered_at,
+        h1_0.created_at,
+        h1_0.feedback,
+        h1_0.question,
+        h1_0.question_id,
+        h1_0.score,
+        h1_0.status,
+        h1_0.user_id 
+    from
+        history h1_0 
+    left join
+        "user" u1_0 
+            on u1_0.user_id=h1_0.user_id 
+    where
+        u1_0.user_id=? 
+        and h1_0.status=?
+Hibernate: 
+    select
+        u1_0.user_id,
+        u1_0.email,
+        u1_0.job,
+        u1_0.name,
+        u1_0.notification_type,
+        u1_0.password,
+        u1_0.points,
+        u1_0.schedule 
+    from
+        "user" u1_0 
+    where
+        u1_0.user_id=?
+Hibernate: 
+    select
+        count(h1_0.history_id) 
+    from
+        history h1_0 
+    left join
+        "user" u1_0 
+            on u1_0.user_id=h1_0.user_id 
+    where
+        u1_0.user_id=? 
+        and h1_0.status=?
+Hibernate: 
+    SELECT
+        * 
+    FROM
+        history 
+    WHERE
+        user_id = ? 
+        AND created_at >= CURRENT_DATE 
+        AND created_at < CURRENT_DATE + INTERVAL '1 day' 
+    ORDER BY
+        created_at DESC 
+    LIMIT
+        1
+Hibernate: 
+    select
+        h1_0.history_id,
+        h1_0.answer,
+        h1_0.answered_at,
+        h1_0.created_at,
+        h1_0.feedback,
+        h1_0.question,
+        h1_0.question_id,
+        h1_0.score,
+        h1_0.status,
+        h1_0.user_id 
+    from
+        history h1_0 
+    left join
+        "user" u1_0 
+            on u1_0.user_id=h1_0.user_id 
+    where
+        u1_0.user_id=? 
+        and h1_0.status=?
