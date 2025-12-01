@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import wisoft.backend.auth.dto.request.EmailRequest;
 import wisoft.backend.auth.dto.request.FindPasswordRequest;
 import wisoft.backend.auth.dto.request.LoginRequest;
@@ -32,38 +33,44 @@ public class AuthService {
     private final Map<String, VerificationData> verificationCodes = new ConcurrentHashMap<>();
     private final Set<String> verifiedEmails = ConcurrentHashMap.newKeySet();
 
+    @Transactional
     public SignupResponse signup(SignupRequest request) {
 
-        if (userRepository.existsByEmail(request.email()) == true) {
-            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+        try {
+            if (userRepository.existsByEmail(request.email()) == true) {
+                throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+            }
+
+            if (verifiedEmails.contains(request.email()) == false) {
+                throw new IllegalArgumentException("이메일 인증이 필요합니다.");
+            }
+
+            String id = "u_" + UUID.randomUUID();
+            User user = User.builder()
+                    .id(id)
+                    .email(request.email())
+                    .password(request.password())
+                    .name(request.name())
+                    .job(request.settings().job())
+                    .schedule(request.settings().scheduleType())
+                    .notificationType(request.settings().notificationType())
+                    .build();
+
+            User savedUser = userRepository.save(user);
+            verifiedEmails.remove(request.email());
+
+            // 임시 저장된 카카오 토큰 연결
+            kakaoAuthService.linkTempTokenToUser(request.email(), savedUser);
+
+            return SignupResponse.of(
+                    savedUser.getId(),
+                    savedUser.getEmail(),
+                    savedUser.getName()
+            );
+        } catch (Exception e) {
+            kakaoAuthService.removeTempToken(request.email());
+            throw e;
         }
-
-        if (verifiedEmails.contains(request.email()) == false) {
-            throw new IllegalArgumentException("이메일 인증이 필요합니다.");
-        }
-
-        String id = "u_" + UUID.randomUUID();
-        User user = User.builder()
-                .id(id)
-                .email(request.email())
-                .password(request.password())
-                .name(request.name())
-                .job(request.settings().job())
-                .schedule(request.settings().scheduleType())
-                .notificationType(request.settings().notificationType())
-                .build();
-
-        User savedUser = userRepository.save(user);
-        verifiedEmails.remove(request.email());
-
-        // 임시 저장된 카카오 토큰 연결
-        kakaoAuthService.linkTempTokenToUser(request.email(), savedUser);
-
-        return SignupResponse.of(
-                savedUser.getId(),
-                savedUser.getEmail(),
-                savedUser.getName()
-        );
     }
 
     public LoginResponse signin(LoginRequest request) {

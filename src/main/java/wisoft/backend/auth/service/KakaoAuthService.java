@@ -48,16 +48,22 @@ public class KakaoAuthService {
      */
     @Transactional
     public void saveTempToken(String email, String authorizationCode) {
-        KakaoTokenResponse tokenResponse = requestAccessToken(authorizationCode);
-        LocalDateTime expiresAt = LocalDateTime.now().plusSeconds(tokenResponse.getExpiresIn());
+        try {
 
-        tempTokens.put(email, new TempKakaoToken(
-                tokenResponse.getAccessToken(),
-                tokenResponse.getRefreshToken(),
-                expiresAt
-        ));
+            KakaoTokenResponse tokenResponse = requestAccessToken(authorizationCode);
+            LocalDateTime expiresAt = LocalDateTime.now().plusSeconds(tokenResponse.getExpiresIn());
 
-        log.info("카카오 토큰 임시 저장 완료 - email: {}", email);
+            tempTokens.put(email, new TempKakaoToken(
+                    tokenResponse.getAccessToken(),
+                    tokenResponse.getRefreshToken(),
+                    expiresAt
+            ));
+
+            log.info("카카오 토큰 임시 저장 완료 - email: {}", email);
+        } catch (Exception e) {
+            log.error("카카오톡 토큰 요청 실패", email, e);
+            throw new RuntimeException("카카오 인증에 실패했습니다. 다시 시도해주세요." + e);
+        }
     }
 
     /**
@@ -72,18 +78,23 @@ public class KakaoAuthService {
             return;
         }
 
-        OAuthToken oAuthToken = OAuthToken.builder()
-                .user(user)
-                .provider(OAuthProvider.KAKAO)
-                .accessToken(tempToken.getAccessToken())
-                .refreshToken(tempToken.getRefreshToken())
-                .tokenExpiresAt(tempToken.getExpiresAt())
-                .build();
+        try {
+            OAuthToken oAuthToken = OAuthToken.builder()
+                    .user(user)
+                    .provider(OAuthProvider.KAKAO)
+                    .accessToken(tempToken.getAccessToken())
+                    .refreshToken(tempToken.getRefreshToken())
+                    .tokenExpiresAt(tempToken.getExpiresAt())
+                    .build();
 
-        oAuthTokenRepository.save(oAuthToken);
-        tempTokens.remove(email);
+            oAuthTokenRepository.save(oAuthToken);
+            tempTokens.remove(email);
 
-        log.info("임시 토큰을 User에 연결 완료 - userId: {}, email: {}", user.getId(), email);
+            log.info("임시 토큰을 User에 연결 완료 - userId: {}, email: {}", user.getId(), email);
+        } catch (Exception e) {
+            log.error("임시 토큰 DB 저장 실패" + user.getId(), email, e);
+            throw new RuntimeException("토큰 저장에 실패했습니다.", e);
+        }
     }
 
     /**
@@ -100,20 +111,19 @@ public class KakaoAuthService {
 
         OAuthToken oAuthToken =
                 oAuthTokenRepository.findByUserIdAndProvider(userId, OAuthProvider.KAKAO)
-                .orElse(OAuthToken.builder()
-                        .user(user)
-                        .provider(OAuthProvider.KAKAO)
-                        .accessToken(tokenResponse.getAccessToken())
-                        .refreshToken(tokenResponse.getRefreshToken())
-                        .tokenExpiresAt(expiresAt)
-                        .build());
+                        .orElse(OAuthToken.builder()
+                                .user(user)
+                                .provider(OAuthProvider.KAKAO)
+                                .accessToken(tokenResponse.getAccessToken())
+                                .refreshToken(tokenResponse.getRefreshToken())
+                                .tokenExpiresAt(expiresAt)
+                                .build());
 
         oAuthToken.updateTokens(
                 tokenResponse.getAccessToken(),
                 tokenResponse.getRefreshToken(),
                 expiresAt
         );
-
 
         oAuthTokenRepository.save(oAuthToken);
         log.info("카카오 토큰 저장 완료 - userId: {}", userId);
@@ -124,7 +134,6 @@ public class KakaoAuthService {
      */
     private KakaoTokenResponse requestAccessToken(String authorizationCode) {
         String url = "https://kauth.kakao.com/oauth/token";
-
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -219,7 +228,7 @@ public class KakaoAuthService {
 
         // 토큰 만료 5분 전에 갱신
         if (oAuthToken.isExpiringSoon()) {
-            log.info("토큰이 곧 만료됩니다. 갱신을 시작합니다 - userId: {}",userId);
+            log.info("토큰이 곧 만료됩니다. 갱신을 시작합니다 - userId: {}", userId);
             return refreshAccessToken(userId);
         }
         return oAuthToken.getAccessToken();
@@ -249,6 +258,16 @@ public class KakaoAuthService {
 
         public LocalDateTime getExpiresAt() {
             return expiresAt;
+        }
+    }
+
+
+    /**
+     * 임시 토큰 삭제
+     */
+    public void removeTempToken(String email) {
+        if (tempTokens.remove(email) != null) {
+            log.info("임시 토큰 삭제 완료 - email: {}", email);
         }
     }
 }
