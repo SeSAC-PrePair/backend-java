@@ -99,6 +99,6 @@ public class AuthController {
         kakaoAuthService.handleCallback(code, state);
 
         // 프론트엔드 성공 페이지로 리다이렉트
-        return new RedirectView(frontendUrl + "/reward");
+        return new RedirectView(frontendUrl + "/rewards");
     }
 }
