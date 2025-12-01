@@ -11,6 +11,8 @@ import wisoft.backend.auth.dto.request.UserProfileUpdateRequest;
 import wisoft.backend.auth.dto.response.*;
 import wisoft.backend.auth.entity.User;
 import wisoft.backend.auth.repository.UserRepository;
+import wisoft.backend.exception.AuthenticationException;
+import wisoft.backend.exception.ResourceNotFoundException;
 import wisoft.backend.interviews.entity.History;
 import wisoft.backend.interviews.entity.QuestionStatus;
 import wisoft.backend.interviews.repository.HistoryRepository;
@@ -35,7 +37,7 @@ public class UserService {
         User user = getUserById(userId);
 
         if ((user.getPassword().equals(request.password())) == false) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new AuthenticationException("비밀번호가 일치하지 않습니다.");
         }
 
         List<History> histories = historyRepository.findByUser_IdOrderByCreatedAtDesc(userId);
@@ -72,7 +74,7 @@ public class UserService {
 
     private User getUserById(String userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("사용자", userId));
     }
 
     @Transactional(readOnly = true)
