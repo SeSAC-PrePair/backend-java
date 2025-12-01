@@ -28,6 +28,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final EmailService emailService;
+    private final KakaoAuthService kakaoAuthService;
     private final Map<String, VerificationData> verificationCodes = new ConcurrentHashMap<>();
     private final Set<String> verifiedEmails = ConcurrentHashMap.newKeySet();
 
@@ -54,6 +55,9 @@ public class AuthService {
 
         User savedUser = userRepository.save(user);
         verifiedEmails.remove(request.email());
+
+        // 임시 저장된 카카오 토큰 연결
+        kakaoAuthService.linkTempTokenToUser(request.email(), savedUser);
 
         return SignupResponse.of(
                 savedUser.getId(),

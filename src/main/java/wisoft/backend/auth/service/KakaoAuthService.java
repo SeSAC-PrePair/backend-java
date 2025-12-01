@@ -1,6 +1,8 @@
 package wisoft.backend.auth.service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +33,6 @@ public class KakaoAuthService {
     private final RestTemplate restTemplate;
     private final UserRepository userRepository;
     private final OAuthTokenRepository oAuthTokenRepository;
-    private final InterviewQueryService interviewQueryService;
 
     @Value("${kakao.client.id}")
     private String clientId;
@@ -39,6 +40,51 @@ public class KakaoAuthService {
     @Value("${kakao.redirect.uri}")
     private String redirectUri;
 
+    // 임시 토큰 저장소 (이메일 -> 토큰 정보)
+    private final Map<String, TempKakaoToken> tempTokens = new ConcurrentHashMap<>();
+
+    /**
+     * 회원가입 전 카카오 토큰 임시 저장
+     */
+    @Transactional
+    public void saveTempToken(String email, String authorizationCode) {
+        KakaoTokenResponse tokenResponse = requestAccessToken(authorizationCode);
+        LocalDateTime expiresAt = LocalDateTime.now().plusSeconds(tokenResponse.getExpiresIn());
+
+        tempTokens.put(email, new TempKakaoToken(
+                tokenResponse.getAccessToken(),
+                tokenResponse.getRefreshToken(),
+                expiresAt
+        ));
+
+        log.info("카카오 토큰 임시 저장 완료 - email: {}", email);
+    }
+
+    /**
+     * 임시 저장된 토큰을 User에 연결
+     */
+    @Transactional
+    public void linkTempTokenToUser(String email, User user) {
+        TempKakaoToken tempToken = tempTokens.get(email);
+
+        if (tempToken == null) {
+            log.warn("임시 저장된 카카오 토큰이 없습니다 - email: {}", email);
+            return;
+        }
+
+        OAuthToken oAuthToken = OAuthToken.builder()
+                .user(user)
+                .provider(OAuthProvider.KAKAO)
+                .accessToken(tempToken.getAccessToken())
+                .refreshToken(tempToken.getRefreshToken())
+                .tokenExpiresAt(tempToken.getExpiresAt())
+                .build();
+
+        oAuthTokenRepository.save(oAuthToken);
+        tempTokens.remove(email);
+
+        log.info("임시 토큰을 User에 연결 완료 - userId: {}, email: {}", user.getId(), email);
+    }
 
     /**
      * OAuth 콜백 처리: authorization code로 토큰 발급 및 저장
@@ -177,5 +223,32 @@ public class KakaoAuthService {
             return refreshAccessToken(userId);
         }
         return oAuthToken.getAccessToken();
+    }
+
+    /**
+     * 임시 카카오 토큰 저장용 내부 클래스
+     */
+    private static class TempKakaoToken {
+        private final String accessToken;
+        private final String refreshToken;
+        private final LocalDateTime expiresAt;
+
+        public TempKakaoToken(String accessToken, String refreshToken, LocalDateTime expiresAt) {
+            this.accessToken = accessToken;
+            this.refreshToken = refreshToken;
+            this.expiresAt = expiresAt;
+        }
+
+        public String getAccessToken() {
+            return accessToken;
+        }
+
+        public String getRefreshToken() {
+            return refreshToken;
+        }
+
+        public LocalDateTime getExpiresAt() {
+            return expiresAt;
+        }
     }
 }

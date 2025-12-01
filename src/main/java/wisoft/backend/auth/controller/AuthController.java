@@ -76,12 +76,12 @@ public class AuthController {
      * 카카오 OAuth 인증 페이지로 리다이렉트
      */
     @GetMapping("/kakao")
-    public RedirectView authorize(@RequestParam("user_id") String userId) {
+    public RedirectView authorize(@RequestParam("email") String email) {
         String kakaoAuthUrl = String.format(
                 "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=talk_message&state=%s",
                 clientId,
                 redirectUri,
-                userId
+                email
         );
         System.out.println("===== kakaoAuthUrl =====");
         System.out.println(kakaoAuthUrl);
@@ -101,15 +101,16 @@ public class AuthController {
         System.out.println("===== RAW CALLBACK =====");
         System.out.println("URL: " + request.getRequestURL());
         System.out.println("Query: " + request.getQueryString());
-        System.out.println("code=" + code + ", state=" + state);
+        System.out.println("code=" + code + ", state(email)=" + state);
         System.out.println("=========================");
 
+        // state는 email
+        String email = state;
 
-        System.out.println("code: " + code);
-
-        kakaoAuthService.handleCallback(code, state);
+        // 카카오 토큰 임시 저장
+        kakaoAuthService.saveTempToken(email, code);
 
         // 프론트엔드 성공 페이지로 리다이렉트
-        return new RedirectView(frontendUrl + "/signup-success?kakao=success&userId=" + state + "&needsKakaoAuth=true");
+        return new RedirectView(frontendUrl + "/signup-success?kakao=success&email=" + email);
     }
 }
