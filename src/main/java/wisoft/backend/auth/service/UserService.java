@@ -4,19 +4,21 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wisoft.backend.auth.dto.response.ActivityData;
 import wisoft.backend.auth.dto.request.DeleteUserRequest;
 import wisoft.backend.auth.dto.request.RewardDeductRequest;
 import wisoft.backend.auth.dto.request.UserProfileUpdateRequest;
-import wisoft.backend.auth.dto.response.DeleteUserResponse;
-import wisoft.backend.auth.dto.response.RewardDeductResponse;
-import wisoft.backend.auth.dto.response.UserProfileResponse;
-import wisoft.backend.auth.dto.response.UserProfileUpdateResponse;
+import wisoft.backend.auth.dto.response.*;
 import wisoft.backend.auth.entity.User;
 import wisoft.backend.auth.repository.UserRepository;
 import wisoft.backend.interviews.entity.History;
+import wisoft.backend.interviews.entity.QuestionStatus;
 import wisoft.backend.interviews.repository.HistoryRepository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -61,5 +63,67 @@ public class UserService {
     private User getUserById(String userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public UserSummaryResponse getUserSummary(String userId) {
+
+        User user = getUserById(userId);
+
+        // 답변한 질문 개수
+        Integer answeredCount = historyRepository
+                .countByUser_IdAndStatus(userId, QuestionStatus.ANSWERED);
+
+        // 오늘의 점수
+        Integer todayScore = historyRepository.findTodayQuestionByUserId(userId)
+                .map(History::getScore)
+                .orElse(null);
+
+        // 보유 포인트
+        Integer points = user.getPoints();
+
+        // 답변한 질문들 조회
+        List<History> answeredHistories = historyRepository
+                .findByUser_IdAndStatus(userId, QuestionStatus.ANSWERED);
+
+        // 연속 학습 일수 계산
+        Integer consecutiveDays = calculateConsecutiveDays(answeredHistories);
+
+        // 잔디 데이터
+        List<ActivityData> activities = answeredHistories.stream()
+                .map(ActivityData::from)
+                .toList();
+
+        return UserSummaryResponse.of(
+                user.getName(),
+                answeredCount,
+                todayScore,
+                points,
+                consecutiveDays,
+                activities
+        );
+    }
+
+    /**
+     * 연속 학습 일수 계산
+     */
+    private Integer calculateConsecutiveDays(List<History> histories) {
+        if (histories.isEmpty()) {
+            return 0;
+        }
+
+        Set<LocalDate> answeredDates = histories.stream()
+                .map(h -> h.getAnsweredAt().toLocalDate())
+                .collect(Collectors.toSet());
+
+        LocalDate today = LocalDate.now();
+        int consecutiveDays = 0;
+
+        LocalDate checkDate = today;
+        while (answeredDates.contains(checkDate)) {
+            consecutiveDays++;
+            checkDate = checkDate.minusDays(1);
+        }
+        return consecutiveDays;
     }
 }
