@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -76,7 +75,7 @@ public class AuthController {
      * 카카오 OAuth 인증 페이지로 리다이렉트
      */
     @GetMapping("/kakao")
-    public RedirectView authorize(@RequestHeader("X-User-Id") String userId) {
+    public RedirectView authorize(@RequestParam("user_id") String userId) {
         String kakaoAuthUrl = String.format(
                 "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=talk_message&state=%s",
                 clientId,
