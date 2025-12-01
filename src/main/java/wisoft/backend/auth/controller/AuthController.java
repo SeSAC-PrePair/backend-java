@@ -111,6 +111,6 @@ public class AuthController {
         kakaoAuthService.saveTempToken(email, code);
 
         // 프론트엔드 성공 페이지로 리다이렉트
-        return new RedirectView(frontendUrl + "/signup-success?kakao=success&email=" + email);
+        return new RedirectView(frontendUrl + "/auth?mode=signup&kakao=success&email=" + email);
     }
 }
