@@ -1,5 +1,6 @@
 package wisoft.backend.auth.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -91,7 +92,15 @@ public class AuthController {
     @GetMapping("/kakao/callback")
     public RedirectView callback(
             @RequestParam String code,
-            @RequestParam String state) { // state = userId
+            @RequestParam String state,
+            HttpServletRequest request) {
+
+        System.out.println("===== RAW CALLBACK =====");
+        System.out.println("URL: " + request.getRequestURL());
+        System.out.println("Query: " + request.getQueryString());
+        System.out.println("code=" + code + ", state=" + state);
+        System.out.println("=========================");
+
 
         System.out.println("code: " + code);
 
