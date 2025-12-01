@@ -41,6 +41,7 @@ public class NotificationService {
     /**
      * 질문 생성 시 알림 전송 (카카오톡 또는 이메일)
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void sendQuestionNotification(String userId, String question) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다"));

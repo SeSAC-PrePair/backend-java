@@ -36,4 +36,9 @@ public interface HistoryRepository extends JpaRepository<History, String> {
      * 특정 사용자의 특정 상태 질문 내역 조회
      */
     List<History> findByUser_IdAndStatus(String userId, QuestionStatus questionStatus);
+
+    /**
+     * 특정 사용자의 답변한 질문 개수 조회
+     */
+    Integer countByUser_IdAndStatus(String userId, QuestionStatus questionStatus);
 }

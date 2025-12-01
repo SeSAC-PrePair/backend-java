@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import wisoft.backend.auth.dto.request.DeleteUserRequest;
 import wisoft.backend.auth.dto.request.RewardDeductRequest;
 import wisoft.backend.auth.dto.request.UserProfileUpdateRequest;
-import wisoft.backend.auth.dto.response.DeleteUserResponse;
-import wisoft.backend.auth.dto.response.RewardDeductResponse;
-import wisoft.backend.auth.dto.response.UserProfileResponse;
-import wisoft.backend.auth.dto.response.UserProfileUpdateResponse;
+import wisoft.backend.auth.dto.response.*;
 import wisoft.backend.auth.service.UserService;
 
 @RestController
@@ -52,6 +49,14 @@ public class UserController {
             @Valid @RequestBody UserProfileUpdateRequest request
     ) {
         UserProfileUpdateResponse response = userService.updateUserProfile(userId, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/me/summary")
+    public ResponseEntity<UserSummaryResponse> getUserSummary(
+            @RequestHeader("X-User-ID") String userId
+    ) {
+        UserSummaryResponse response = userService.getUserSummary(userId);
         return ResponseEntity.ok(response);
     }
 }
