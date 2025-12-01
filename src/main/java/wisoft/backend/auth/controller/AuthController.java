@@ -83,6 +83,9 @@ public class AuthController {
                 redirectUri,
                 userId
         );
+        System.out.println("===== kakaoAuthUrl =====");
+        System.out.println(kakaoAuthUrl);
+
         return new RedirectView(kakaoAuthUrl);
     }
 
