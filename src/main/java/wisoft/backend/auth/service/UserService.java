@@ -51,6 +51,12 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public RewardPageResponse getRewardPage(String userId) {
+        User user = getUserById(userId);
+        return RewardPageResponse.of(user.getName(), user.getPoints());
+    }
+
+    @Transactional(readOnly = true)
     public UserProfileResponse getUserProfile(String userId) {
         User user = getUserById(userId);
         return UserProfileResponse.from(user);
