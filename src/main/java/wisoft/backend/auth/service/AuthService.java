@@ -16,6 +16,10 @@ import wisoft.backend.auth.dto.response.LoginResponse;
 import wisoft.backend.auth.dto.response.SignupResponse;
 import wisoft.backend.auth.entity.User;
 import wisoft.backend.auth.repository.UserRepository;
+import wisoft.backend.exception.AuthenticationException;
+import wisoft.backend.exception.BusinessException;
+import wisoft.backend.exception.ConflictException;
+import wisoft.backend.exception.ResourceNotFoundException;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -38,11 +42,11 @@ public class AuthService {
 
         try {
             if (userRepository.existsByEmail(request.email()) == true) {
-                throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+                throw new ConflictException("이미 사용 중인 이메일입니다.");
             }
 
             if (verifiedEmails.contains(request.email()) == false) {
-                throw new IllegalArgumentException("이메일 인증이 필요합니다.");
+                throw new BusinessException("EMAIL_VERIFICATION_REQUIRED", "이메일 인증이 필요합니다.");
             }
 
             String id = "u_" + UUID.randomUUID();
@@ -75,10 +79,10 @@ public class AuthService {
 
     public LoginResponse signin(LoginRequest request) {
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("이메일", request.email()));
 
         if ((user.getPassword().equals(request.password())) == false) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new AuthenticationException("비밀번호가 일치하지 않습니다.");
         }
 
         return LoginResponse.of(
@@ -89,7 +93,7 @@ public class AuthService {
 
     public FindPasswordResponse findPassword(FindPasswordRequest request) {
         User user = userRepository.findByEmail(request.email())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 이메일입니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("이메일", request.email()));
 
         return FindPasswordResponse.of(
                 user.getEmail(),
@@ -114,16 +118,16 @@ public class AuthService {
         VerificationData data = verificationCodes.get(request.email());
 
         if (data == null) {
-            throw new IllegalArgumentException("인증 코드가 존재하지 않습니다.");
+            throw new BusinessException("VERIFICATION_CODE_NOT_FOUND", "인증 코드가 존재하지 않습니다.");
         }
 
         if (data.isExpired()) {
             verificationCodes.remove(request.email());
-            throw new IllegalArgumentException("인증 코드가 만료되었습니다.");
+            throw new BusinessException("VERIFICATION_CODE_EXPIRED", "인증 코드가 만료되었습니다.");
         }
 
         if (data.code.equals(request.code()) == false) {
-            throw new IllegalArgumentException("인증 코드가 일치하지 않습니다.");
+            throw new BusinessException("VERIFICATION_CODE_MISMATCH", "인증 코드가 일치하지 않습니다.");
         }
 
         verificationCodes.remove(request.email());
