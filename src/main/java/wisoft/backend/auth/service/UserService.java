@@ -10,6 +10,7 @@ import wisoft.backend.auth.dto.request.RewardDeductRequest;
 import wisoft.backend.auth.dto.request.UserProfileUpdateRequest;
 import wisoft.backend.auth.dto.response.*;
 import wisoft.backend.auth.entity.User;
+import wisoft.backend.auth.repository.OAuthTokenRepository;
 import wisoft.backend.auth.repository.UserRepository;
 import wisoft.backend.exception.AuthenticationException;
 import wisoft.backend.exception.ResourceNotFoundException;
@@ -32,6 +33,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final HistoryRepository historyRepository;
     private final KakaoAuthService kakaoAuthService;
+    private final OAuthTokenRepository oAuthTokenRepository;
 
     public DeleteUserResponse deleteUser(String userId, DeleteUserRequest request) {
         User user = getUserById(userId);
@@ -42,6 +44,7 @@ public class UserService {
 
         List<History> histories = historyRepository.findByUser_IdOrderByCreatedAtDesc(userId);
         historyRepository.deleteAll(histories);
+        oAuthTokenRepository.deleteByUserId(userId);
         userRepository.delete(user);
         kakaoAuthService.removeTempToken(user.getEmail());
 

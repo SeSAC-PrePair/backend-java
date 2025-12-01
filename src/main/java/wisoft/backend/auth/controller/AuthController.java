@@ -77,9 +77,9 @@ public class AuthController {
      */
     @GetMapping("/kakao")
     public RedirectView authorize(@RequestParam("email") String email) {
-        // prompt=login: 매번 카카오 로그인 및 동의 화면을 표시 (탈퇴 후 재가입 시 필요)
+        // prompt=consent: 매번 카카오 동의 화면을 표시 (탈퇴 후 재가입 시 필요)
         String kakaoAuthUrl = String.format(
-                "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=talk_message&state=%s&prompt=login",
+                "https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=talk_message&state=%s&prompt=consent",
                 clientId,
                 redirectUri,
                 email

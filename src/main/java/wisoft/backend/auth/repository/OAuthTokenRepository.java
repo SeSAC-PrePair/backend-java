@@ -14,4 +14,9 @@ import wisoft.backend.auth.entity.OAuthToken;
        */
       Optional<OAuthToken> findByUserIdAndProvider(String userId, OAuthProvider provider);
 
+      /**
+       * 특정 사용자의 모든 OAuth 토큰 삭제
+       */
+      void deleteByUserId(String userId);
+
   }
