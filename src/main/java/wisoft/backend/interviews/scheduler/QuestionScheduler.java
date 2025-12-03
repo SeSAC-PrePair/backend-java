@@ -22,7 +22,7 @@ public class QuestionScheduler {
     /**
      * 매일 오전 9시에 일일 구독 사용자에게 질문 발송
      */
-    @Scheduled(cron = "0 0 9 * * *")
+    @Scheduled(cron = "0 0 15 * * *", zone = "Asia/Seoul")
     public void sendDailyQuestions() {
         sendQuestionsByScheduleType(ScheduleType.DAILY);
     }
@@ -30,7 +30,7 @@ public class QuestionScheduler {
     /**
      * 매주 월요일 오전 9시에 주간 구독 사용자에게 질문 발송
      */
-    @Scheduled(cron = "0 0 9 * * MON")
+    @Scheduled(cron = "0 0 9 * * MON",  zone = "Asia/Seoul")
     public void sendWeeklyQuestions() {
         sendQuestionsByScheduleType(ScheduleType.WEEKLY);
     }
