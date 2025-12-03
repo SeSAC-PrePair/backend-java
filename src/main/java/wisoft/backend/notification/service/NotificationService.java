@@ -1,4 +1,4 @@
-package wisoft.backend.notification;
+package wisoft.backend.notification.service;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

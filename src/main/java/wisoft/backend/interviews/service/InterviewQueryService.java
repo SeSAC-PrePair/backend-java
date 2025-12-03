@@ -3,7 +3,8 @@ package wisoft.backend.interviews.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wisoft.backend.exception.ResourceNotFoundException;
+import wisoft.backend.global.exception.ErrorCode;
+import wisoft.backend.global.exception.custom.BusinessException;
 import wisoft.backend.interviews.dto.response.QuestionDetailResponse;
 import wisoft.backend.interviews.dto.response.QuestionHistoryResponse;
 import wisoft.backend.interviews.dto.response.TodayQuestionResponse;
@@ -21,7 +22,7 @@ public class InterviewQueryService {
 
     public TodayQuestionResponse getTodayQuestion(String userId) {
         History history = historyRepository.findTodayQuestionByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("오늘 생성된 질문이 없습니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.QUESTION_NOT_FOUND));
 
         return TodayQuestionResponse.from(history);
     }
@@ -35,10 +36,9 @@ public class InterviewQueryService {
     }
 
     public QuestionDetailResponse getQuestionDetail(String historyId, String userId) {
-        History history = historyRepository.findByHistoryIdAndUser_Id(historyId, userId).orElseThrow(
-                () -> new ResourceNotFoundException("질문에 답변", historyId));
+        History history = historyRepository.findByHistoryIdAndUser_Id(historyId, userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.QUESTION_NOT_FOUND));
 
         return QuestionDetailResponse.from(history);
     }
-
 }

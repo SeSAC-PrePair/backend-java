@@ -20,13 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import wisoft.backend.auth.entity.User;
 import wisoft.backend.auth.repository.UserRepository;
+import wisoft.backend.global.exception.ErrorCode;
+import wisoft.backend.global.exception.custom.BusinessException;
 import wisoft.backend.interviews.entity.History;
 import wisoft.backend.interviews.entity.QuestionStatus;
 import wisoft.backend.interviews.entity.InterviewQuestion;
 import wisoft.backend.interviews.repository.HistoryRepository;
 import wisoft.backend.interviews.repository.InterviewQuestionRepository;
-import wisoft.backend.notification.NotificationService;
-
+import wisoft.backend.notification.service.NotificationService;
 
 @Service
 @Slf4j
@@ -58,7 +59,7 @@ public class QuestionService {
     @Transactional
     public String generateQuestion(String userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다: " + userId));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         // 이미 받은 질문들 조회
         List<String> previousQuestions = historyRepository
@@ -134,7 +135,7 @@ public class QuestionService {
 
         } catch (Exception e) {
             log.error("면접 질문 생성 실패", e);
-            throw new RuntimeException("면접 질문 생성 중 오류가 발생했습니다: " + e.getMessage(), e);
+            throw new BusinessException(ErrorCode.QUESTION_GENERATION_FAILED);
         }
     }
 
