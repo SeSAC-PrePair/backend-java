@@ -22,13 +22,13 @@ public class OpenRouterClient {
 
     private final RestTemplate restTemplate;
 
-    @Value("%{openrouter.api.key")
+    @Value("${openrouter.api.key}")
     private String apiKey;
 
-    @Value("${openrouter.base.url")
+    @Value("${openrouter.base.url}")
     private String baseUrl;
 
-    @Value("openrouter.model")
+    @Value("${openrouter.model}")
     private String model;
 
     public String generateQuestion(AIPrompt prompt) {
@@ -75,6 +75,7 @@ public class OpenRouterClient {
                         4. 질문 길이는 최소 2문장 이상으로 작성하고, 배경 설명이나 구체적인 시나리오를 포함하세요
                         5. 단순한 'A에 대해 설명하세요' 보다는 '어떤 상황에서 A를 어떻게 활용했는지' 같이 구체적으로 물어보세요
                         6. 질문만 텍스트로 출력하고, 다른 설명이나 메타 정보는 포함하지 마세요
+                        7. 반드시 1개의 질문만 생성하세요
                         """,
                 prompt.job(),
                 samplesText,
